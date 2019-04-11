@@ -1,6 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Box, Image, Heading, Text, Button, Flex } from 'rebass';
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { parse, roll, parseAndRoll, Roll } from 'roll-parser';
 import d4svg from './images/d4.svg';
 import d6svg from './images/perspective-dice-six.svg';
 import d8svg from './images/dice-eight-faces-eight.svg';
@@ -23,21 +24,14 @@ const AppRoot = styled.div`
 
 const StyledButton = styled(Button)`
     background-color: black;
-    border: .5rem solid #002b36;
+    border: .333rem solid #303030;
+    margin: .5rem;
+    border-radius: .666rem;
 
     transition: all .1337s ease-in-out;
     &:hover { transform: scale(1.1); }
     &:active { transform: scale(1.337); }
 `;
-
-
-// TODO make this one function
-const rollD20 = () => Math.floor(Math.random()*20+1);
-const rollD12 = () => Math.floor(Math.random()*12+1);
-const rollD10 = () => Math.floor(Math.random()*10+1);
-const rollD8 = () => Math.floor(Math.random()*8+1);
-const rollD6 = () => Math.floor(Math.random()*6+1);
-const rollD4 = () => Math.floor(Math.random()*4+1);
 
 const App = () => {
     const [D4s, setD4s] = useState(0);
@@ -60,6 +54,14 @@ const App = () => {
     for (let i = 0; i < D12s; i++) {d12s.push(<Image src={d12svg} height="5rem" />)}
     let d20s = []
     for (let i = 0; i < D20s; i++) {d20s.push(<Image src={d20svg} height="5rem" />)}
+
+    const [rollString, setRollString] = useState('')
+    const [log, setLog] = useState([]);
+
+    useEffect(() => {
+        const str = `${D4s >= 1 ? D4s + 'd4 + ' : ''}${D6s >= 1 ? D6s + 'd6 + ' : ''}${D8s >= 1 ? D8s + 'd8 + ' : ''}${D10s >= 1 ? D10s + 'd10 + ' : ''}${D12s >= 1 ? D12s + 'd12 + ' : ''}${D20s >= 1 ? D20s + 'd20 + ' : ''}`.slice(0, -3);
+        setRollString(str);
+    });
 
     return (
         <AppRoot>
@@ -99,7 +101,14 @@ const App = () => {
                     >
                         Clear
                     </StyledButton>
-                    <StyledButton>
+                    <StyledButton
+                        onClick={() => {
+                            console.log(log);
+                            const result = parseAndRoll(rollString);
+                            console.log(result);
+                            setLog([ ...log, `${rollString} = ${result}` ])
+                        }}
+                    >
                         Roll!
                     </StyledButton>
                     <ul>{d4s} </ul>
@@ -117,7 +126,8 @@ const App = () => {
                     color='white'
                     bg='#6c71c4'
                 >
-                    Roll Log
+                    <Heading>Roll Log</Heading>
+                    { log.map( e => <Text>{ e.toString() }</Text>) }
                 </Box>
             </Flex>
         </AppRoot>
