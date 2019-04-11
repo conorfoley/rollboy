@@ -16,14 +16,14 @@ const theme = {
 const AppRoot = styled.div`
     height: 100vh;
     width: 100vw;
-    background-color: lightgray;
+    background-color: #6c71c4;
     @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
     font-family: 'Source Code Pro', monospace;
 `;
 
 const StyledButton = styled(Button)`
     background-color: black;
-    border: .5rem solid teal;
+    border: .5rem solid #002b36;
 
     transition: all .1337s ease-in-out;
     &:hover { transform: scale(1.1); }
@@ -39,95 +39,89 @@ const rollD8 = () => Math.floor(Math.random()*8+1);
 const rollD6 = () => Math.floor(Math.random()*6+1);
 const rollD4 = () => Math.floor(Math.random()*4+1);
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            d4: 0,
-            d6: 0,
-            d8: 0,
-            d10: 0,
-            d12: 0,
-            d20: 0,
-        };
-    }
-    render() {
-        // TODO make this one function
-        let d4s = []
-        for (let i = 0; i < this.state.d4; i++) {d4s.push(<Image src={d4svg} height="5rem" />)}
-        let d6s = []
-        for (let i = 0; i < this.state.d6; i++) {d6s.push(<Image src={d6svg} height="5rem" />)}
-        let d8s = []
-        for (let i = 0; i < this.state.d8; i++) {d8s.push(<Image src={d8svg} height="5rem" />)}
-        let d10s = []
-        for (let i = 0; i < this.state.d10; i++) {d10s.push(<Image src={d10svg} height="5rem" />)}
-        let d12s = []
-        for (let i = 0; i < this.state.d12; i++) {d12s.push(<Image src={d12svg} height="5rem" />)}
-        let d20s = []
-        for (let i = 0; i < this.state.d20; i++) {d20s.push(<Image src={d20svg} height="5rem" />)}
+const App = () => {
+    const [D4s, setD4s] = useState(0);
+    const [D6s, setD6s] = useState(0);
+    const [D8s, setD8s] = useState(0);
+    const [D10s, setD10s] = useState(0);
+    const [D12s, setD12s] = useState(0);
+    const [D20s, setD20s] = useState(0);
 
-        return (
-            <AppRoot>
-                <Flex flexWrap='wrap'>
+    // TODO make this one function
+    let d4s = []
+    for (let i = 0; i < D4s; i++) {d4s.push(<Image src={d4svg} height="5rem" />)}
+    let d6s = []
+    for (let i = 0; i < D6s; i++) {d6s.push(<Image src={d6svg} height="5rem" />)}
+    let d8s = []
+    for (let i = 0; i < D8s; i++) {d8s.push(<Image src={d8svg} height="5rem" />)}
+    let d10s = []
+    for (let i = 0; i < D10s; i++) {d10s.push(<Image src={d10svg} height="5rem" />)}
+    let d12s = []
+    for (let i = 0; i < D12s; i++) {d12s.push(<Image src={d12svg} height="5rem" />)}
+    let d20s = []
+    for (let i = 0; i < D20s; i++) {d20s.push(<Image src={d20svg} height="5rem" />)}
 
-                    <Box
-                        p={5}
-                        fontSize={4}
-                        width={[ 1, 1, 1 ]}
-                        color='white'
-                        bg='DarkMagenta'
+    return (
+        <AppRoot>
+            <Flex flexWrap='wrap'>
+
+                <Box
+                    p={5}
+                    fontSize={4}
+                    width={[ 1, 1, 1 ]}
+                    color='white'
+                    bg='#6c71c4'
+                >
+                    <StyledButton onClick={() => setD4s(D4s + 1)}> <Image src={d4svg} height="5rem"/> </StyledButton>
+                    <StyledButton onClick={() => setD6s(D6s + 1)}> <Image src={d6svg} height="5rem"/> </StyledButton>
+                    <StyledButton onClick={() => setD8s(D8s + 1)}> <Image src={d8svg} height="5rem"/> </StyledButton>
+                    <StyledButton onClick={() => setD10s(D10s + 1)}> <Image src={d10svg} height="5rem"/> </StyledButton>
+                    <StyledButton onClick={() => setD12s(D12s + 1)}> <Image src={d12svg} height="5rem"/> </StyledButton>
+                    <StyledButton onClick={() => setD20s(D20s + 1)}> <Image src={d20svg} height="5rem"/> </StyledButton>
+                </Box>
+
+                <Box
+                    p={5}
+                    fontSize={4}
+                    width={[ 1, 2/3, 2/3 ]}
+                    color='white'
+                    bg='#6c71c4'
+                >
+                    <StyledButton
+                        onClick={() => {
+                            setD4s(0);
+                            setD6s(0);
+                            setD8s(0);
+                            setD10s(0);
+                            setD12s(0);
+                            setD20s(0);
+                        }}
                     >
-                        <StyledButton onClick={() => this.setState({ d4: this.state.d4 + 1 })}> <Image src={d4svg} height="5rem"/> </StyledButton>
-                        <StyledButton onClick={() => this.setState({ d6: this.state.d6 + 1 })}> <Image src={d6svg} height="5rem"/> </StyledButton>
-                        <StyledButton onClick={() => this.setState({ d8: this.state.d8 + 1 })}> <Image src={d8svg} height="5rem"/> </StyledButton>
-                        <StyledButton onClick={() => this.setState({ d10: this.state.d10 + 1 })}> <Image src={d10svg} height="5rem"/> </StyledButton>
-                        <StyledButton onClick={() => this.setState({ d12: this.state.d12 + 1 })}> <Image src={d12svg} height="5rem"/> </StyledButton>
-                        <StyledButton onClick={() => this.setState({ d20: this.state.d20 + 1 })}> <Image src={d20svg} height="5rem"/> </StyledButton>
-                    </Box>
+                        Clear
+                    </StyledButton>
+                    <StyledButton>
+                        Roll!
+                    </StyledButton>
+                    <ul>{d4s} </ul>
+                    <ul>{d6s} </ul>
+                    <ul>{d8s} </ul>
+                    <ul>{d10s} </ul>
+                    <ul>{d12s} </ul>
+                    <ul>{d20s} </ul>
+                </Box>
 
-                    <Box
-                        p={5}
-                        fontSize={4}
-                        width={[ 1, 2/3, 2/3 ]}
-                        color='white'
-                        bg='DarkMagenta'
-                    >
-                        {`${this.state.d4 || ''} ${(!!this.state.d4 ? 'd4' : '')}`}
-                        <StyledButton
-                            onClick={() => this.setState({
-                                d4: null,
-                                d6: null,
-                                d8: null,
-                                d10: null,
-                                d12: null,
-                                d20: null,
-                            })}>
-                            Clear
-                        </StyledButton>
-                        <StyledButton>
-                            Roll!
-                        </StyledButton>
-                        <ul>{d4s} </ul>
-                        <ul>{d6s} </ul>
-                        <ul>{d8s} </ul>
-                        <ul>{d10s} </ul>
-                        <ul>{d12s} </ul>
-                        <ul>{d20s} </ul>
-                    </Box>
-
-                    <Box
-                        p={5}
-                        fontSize={4}
-                        width={[ 1, 1/3, 1/3 ]}
-                        color='white'
-                        bg='DarkMagenta'
-                    >
-                        Roll Log
-                    </Box>
-                </Flex>
-            </AppRoot>
-        );
-    }
+                <Box
+                    p={5}
+                    fontSize={4}
+                    width={[ 1, 1/3, 1/3 ]}
+                    color='white'
+                    bg='#6c71c4'
+                >
+                    Roll Log
+                </Box>
+            </Flex>
+        </AppRoot>
+    );
 }
 
 export default App;
