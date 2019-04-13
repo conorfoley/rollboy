@@ -22,15 +22,36 @@ const AppRoot = styled.div`
     font-family: 'Source Code Pro', monospace;
 `;
 
-const StyledButton = styled(Button)`
-    background-color: black;
-    border: .333rem solid #303030;
-    margin: .5rem;
-    border-radius: .666rem;
-
+const DiceButton = styled(Button)`
+    /* background-color: black;
+    * border: .333rem solid #303030;
+    * margin: .5rem;
+    * border-radius: .666rem;
+    */
     transition: all .1337s ease-in-out;
     &:hover { transform: scale(1.1); }
     &:active { transform: scale(1.337); }
+    background-color: black;
+    border-radius: 0;
+    padding: .25rem;
+`;
+
+const RollButton = styled(Button)`
+    transition: all .1337s ease-in-out;
+    &:hover { transform: scale(1.1); }
+    &:active { transform: scale(1.337); }
+    background-color: black;
+    border-radius: 0;
+`;
+
+const ClearButton = styled(Button)`
+    transition: all .1337s ease-in-out;
+    &:hover { transform: scale(1.1); }
+    &:active { transform: scale(1.337); }
+    background-color: #b58900;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
 `;
 
 const App = () => {
@@ -67,50 +88,34 @@ const App = () => {
         <AppRoot>
             <Flex flexWrap='wrap'>
 
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD4s(D4s + 1)}> <Image src={d4svg} /> </DiceButton>
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD6s(D6s + 1)}> <Image src={d6svg} /> </DiceButton>
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD8s(D8s + 1)}> <Image src={d8svg} /> </DiceButton>
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD10s(D10s + 1)}> <Image src={d10svg} /> </DiceButton>
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD12s(D12s + 1)}> <Image src={d12svg} /> </DiceButton>
+                <DiceButton width={[1/6, 1/6, 1/6]} onClick={() => setD20s(D20s + 1)}> <Image src={d20svg} /> </DiceButton>
+
+                <Box bg="black" width={[1, 1, 1]} p={3} />
+
+                <RollButton
+                    width={[1, 1, 1]}
+                    onClick={() => {
+                        console.log(log);
+                        const result = parseAndRoll(rollString);
+                        console.log(result);
+                        setLog([ ...log, `${rollString} = ${result}` ])
+                    }}
+                >
+                    Roll!
+                </RollButton>
+
                 <Box
-                    p={5}
+                    p={1}
                     fontSize={4}
                     width={[ 1, 1, 1 ]}
                     color='white'
                     bg='#6c71c4'
                 >
-                    <StyledButton onClick={() => setD4s(D4s + 1)}> <Image src={d4svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD6s(D6s + 1)}> <Image src={d6svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD8s(D8s + 1)}> <Image src={d8svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD10s(D10s + 1)}> <Image src={d10svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD12s(D12s + 1)}> <Image src={d12svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD20s(D20s + 1)}> <Image src={d20svg} height="5rem"/> </StyledButton>
-                </Box>
-
-                <Box
-                    p={5}
-                    fontSize={4}
-                    width={[ 1, 2/3, 2/3 ]}
-                    color='white'
-                    bg='#6c71c4'
-                >
-                    <StyledButton
-                        onClick={() => {
-                            setD4s(0);
-                            setD6s(0);
-                            setD8s(0);
-                            setD10s(0);
-                            setD12s(0);
-                            setD20s(0);
-                        }}
-                    >
-                        Clear
-                    </StyledButton>
-                    <StyledButton
-                        onClick={() => {
-                            console.log(log);
-                            const result = parseAndRoll(rollString);
-                            console.log(result);
-                            setLog([ ...log, `${rollString} = ${result}` ])
-                        }}
-                    >
-                        Roll!
-                    </StyledButton>
                     <ul>{d4s} </ul>
                     <ul>{d6s} </ul>
                     <ul>{d8s} </ul>
@@ -120,15 +125,28 @@ const App = () => {
                 </Box>
 
                 <Box
-                    p={5}
+                    p={1}
                     fontSize={4}
                     width={[ 1, 1/3, 1/3 ]}
                     color='white'
                     bg='#6c71c4'
                 >
-                    <Heading>Roll Log</Heading>
                     { log.map( e => <Text>{ e.toString() }</Text>) }
                 </Box>
+                <ClearButton
+                    width={[1, 1, 1]}
+                    onClick={() => {
+                        setD4s(0);
+                        setD6s(0);
+                        setD8s(0);
+                        setD10s(0);
+                        setD12s(0);
+                        setD20s(0);
+                        setLog([]);
+                    }}
+                >
+                    Clear
+                </ClearButton>
             </Flex>
         </AppRoot>
     );
