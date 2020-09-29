@@ -13,25 +13,54 @@ const theme = {
     breakpoints: ['40em', '52em', '64em'],
 }
 
-
 const AppRoot = styled.div`
     height: 100vh;
-    width: 100vw;
+    max-width: 64em;
+    margin: 0 auto;
     background-color: #6c71c4;
     @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
     font-family: 'Source Code Pro', monospace;
 `;
 
-const StyledButton = styled(Button)`
-    background-color: black;
-    border: .333rem solid #303030;
-    margin: .5rem;
-    border-radius: .666rem;
-
+const DiceButton = styled(Button)`
     transition: all .1337s ease-in-out;
     &:hover { transform: scale(1.1); }
     &:active { transform: scale(1.337); }
+    background-color: black;
+    border-radius: 0;
+    padding: .25rem;
 `;
+
+const RollButton = styled(Button)`
+    transition: all .1337s ease-in-out;
+    &:hover { filter: brightness(1.1); }
+    &:active { transform: scale(1.1); }
+    background-color: #303030;
+    border-radius: 0;
+    height: 3rem;
+    touch-action: manipulation;
+`;
+
+const ClearButton = styled(Button)`
+    transition: all .1337s ease-in-out;
+    &:hover { filter: brightness(1.1); }
+    &:active { transform: scale(1.1); }
+    background-color: #b58900;
+    border-radius: 0;
+    position: absolute;
+    bottom: 0;
+    height: 3rem;
+    touch-action: manipulation;
+    max-width: 64em;
+`;
+
+const D4 = () => { return ( <Image src={d4svg} /> ) };
+const D6 = () => { return ( <Image src={d6svg} /> ) };
+const D8 = () => { return ( <Image src={d8svg} /> ) };
+const D10 = () => { return ( <Image src={d10svg} /> ) };
+const D12 = () => { return ( <Image src={d12svg} /> ) };
+const D20 = () => { return ( <Image src={d20svg} /> ) };
+
 
 const App = () => {
     const [D4s, setD4s] = useState(0);
@@ -41,19 +70,7 @@ const App = () => {
     const [D12s, setD12s] = useState(0);
     const [D20s, setD20s] = useState(0);
 
-    // TODO make this one function
-    let d4s = []
-    for (let i = 0; i < D4s; i++) {d4s.push(<Image src={d4svg} height="5rem" />)}
-    let d6s = []
-    for (let i = 0; i < D6s; i++) {d6s.push(<Image src={d6svg} height="5rem" />)}
-    let d8s = []
-    for (let i = 0; i < D8s; i++) {d8s.push(<Image src={d8svg} height="5rem" />)}
-    let d10s = []
-    for (let i = 0; i < D10s; i++) {d10s.push(<Image src={d10svg} height="5rem" />)}
-    let d12s = []
-    for (let i = 0; i < D12s; i++) {d12s.push(<Image src={d12svg} height="5rem" />)}
-    let d20s = []
-    for (let i = 0; i < D20s; i++) {d20s.push(<Image src={d20svg} height="5rem" />)}
+    const [allDice, setAllDice] = useState([]);
 
     const [rollString, setRollString] = useState('')
     const [log, setLog] = useState([]);
@@ -67,68 +84,109 @@ const App = () => {
         <AppRoot>
             <Flex flexWrap='wrap'>
 
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D4]);
+                        setD4s(D4s + 1);
+                    }}>
+                    <Image src={d4svg} />
+                </DiceButton>
+
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D6]);
+                        setD6s(D6s + 1);
+                    }}>
+                    <Image src={d6svg} />
+                </DiceButton>
+
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D8]);
+                        setD8s(D8s + 1);
+                    }}>
+                    <Image src={d8svg} />
+                </DiceButton>
+
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D10]);
+                        setD10s(D10s + 1);
+                    }}>
+                    <Image src={d10svg} />
+                </DiceButton>
+
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D12]);
+                        setD12s(D12s + 1);
+                    }}>
+                    <Image src={d12svg} />
+                </DiceButton>
+
+                <DiceButton
+                    width={[1/3, 1/6, 1/6]}
+                    onClick={() => {
+                        setAllDice([...allDice, D20]);
+                        setD20s(D20s + 1);
+                    }}>
+                    <Image src={d20svg} />
+                </DiceButton>
+
+                <Box bg="black" width={[1, 1, 1]} p={3} />
+
+                <RollButton
+                    width={[1, 1, 1]}
+                    onClick={() => {
+                        console.log(log);
+                        const result = parseAndRoll(rollString);
+                        console.log(result);
+                        setLog([ ...log, `${rollString} = ${result}` ])
+                    }}
+                >
+                    Roll!
+                </RollButton>
+
                 <Box
-                    p={5}
                     fontSize={4}
                     width={[ 1, 1, 1 ]}
                     color='white'
                     bg='#6c71c4'
                 >
-                    <StyledButton onClick={() => setD4s(D4s + 1)}> <Image src={d4svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD6s(D6s + 1)}> <Image src={d6svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD8s(D8s + 1)}> <Image src={d8svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD10s(D10s + 1)}> <Image src={d10svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD12s(D12s + 1)}> <Image src={d12svg} height="5rem"/> </StyledButton>
-                    <StyledButton onClick={() => setD20s(D20s + 1)}> <Image src={d20svg} height="5rem"/> </StyledButton>
+                    {allDice.map(( Die, index ) => <DiceButton onClick={() => setAllDice(allDice.filter((v, i) => i !== index))} width={[1/4, 1/6, 1/6]}><Die/></DiceButton>)}
                 </Box>
 
                 <Box
-                    p={5}
-                    fontSize={4}
-                    width={[ 1, 2/3, 2/3 ]}
-                    color='white'
-                    bg='#6c71c4'
-                >
-                    <StyledButton
-                        onClick={() => {
-                            setD4s(0);
-                            setD6s(0);
-                            setD8s(0);
-                            setD10s(0);
-                            setD12s(0);
-                            setD20s(0);
-                        }}
-                    >
-                        Clear
-                    </StyledButton>
-                    <StyledButton
-                        onClick={() => {
-                            console.log(log);
-                            const result = parseAndRoll(rollString);
-                            console.log(result);
-                            setLog([ ...log, `${rollString} = ${result}` ])
-                        }}
-                    >
-                        Roll!
-                    </StyledButton>
-                    <ul>{d4s} </ul>
-                    <ul>{d6s} </ul>
-                    <ul>{d8s} </ul>
-                    <ul>{d10s} </ul>
-                    <ul>{d12s} </ul>
-                    <ul>{d20s} </ul>
-                </Box>
-
-                <Box
-                    p={5}
+                    p={1}
                     fontSize={4}
                     width={[ 1, 1/3, 1/3 ]}
                     color='white'
                     bg='#6c71c4'
                 >
-                    <Heading>Roll Log</Heading>
                     { log.map( e => <Text>{ e.toString() }</Text>) }
                 </Box>
+
+                <ClearButton
+                    width={[1, 1, 1]}
+                    onClick={() => {
+                        setD4s(0);
+                        setD6s(0);
+                        setD8s(0);
+                        setD10s(0);
+                        setD12s(0);
+                        setD20s(0);
+                        setLog([]);
+                        setAllDice([]);
+                    }}
+                >
+                    Clear
+                </ClearButton>
+
             </Flex>
         </AppRoot>
     );
