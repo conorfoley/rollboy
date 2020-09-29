@@ -15,18 +15,14 @@ const theme = {
 
 const AppRoot = styled.div`
     height: 100vh;
-    width: 100vw;
+    max-width: 64em;
+    margin: 0 auto;
     background-color: #6c71c4;
     @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
     font-family: 'Source Code Pro', monospace;
 `;
 
 const DiceButton = styled(Button)`
-    /* background-color: black;
-    * border: .333rem solid #303030;
-    * margin: .5rem;
-    * border-radius: .666rem;
-    */
     transition: all .1337s ease-in-out;
     &:hover { transform: scale(1.1); }
     &:active { transform: scale(1.337); }
@@ -48,13 +44,14 @@ const RollButton = styled(Button)`
 const ClearButton = styled(Button)`
     transition: all .1337s ease-in-out;
     &:hover { filter: brightness(1.1); }
-    &:active { transform: scale(1.337); }
+    &:active { transform: scale(1.1); }
     background-color: #b58900;
     border-radius: 0;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     height: 3rem;
     touch-action: manipulation;
+    max-width: 64em;
 `;
 
 const D4 = () => { return ( <Image src={d4svg} /> ) };
