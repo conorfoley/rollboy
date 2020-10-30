@@ -9,6 +9,7 @@ import d10svg from './images/d10.svg';
 import d12svg from './images/d12.svg';
 import d20svg from './images/dice-twenty-faces-twenty.svg';
 
+// TODO actually use these
 const theme = {
     breakpoints: ['40em', '52em', '64em'],
 }
@@ -31,6 +32,7 @@ const DiceButton = styled(Button)`
     padding: .25rem;
 `;
 
+// TODO improve this animation
 const RollButton = styled(Button)`
     transition: all .1337s ease-in-out;
     &:hover { filter: brightness(1.1); }
@@ -75,6 +77,7 @@ const App = () => {
     const [rollString, setRollString] = useState('')
     const [log, setLog] = useState([]);
 
+    // TODO fix this
     useEffect(() => {
         const str = `${D4s >= 1 ? D4s + 'd4 + ' : ''}${D6s >= 1 ? D6s + 'd6 + ' : ''}${D8s >= 1 ? D8s + 'd8 + ' : ''}${D10s >= 1 ? D10s + 'd10 + ' : ''}${D12s >= 1 ? D12s + 'd12 + ' : ''}${D20s >= 1 ? D20s + 'd20 + ' : ''}`.slice(0, -3);
         setRollString(str);
@@ -191,5 +194,5 @@ const App = () => {
         </AppRoot>
     );
 }
-
+// abstract ClearButton onClick 
 export default App;
