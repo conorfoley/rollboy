@@ -25,7 +25,10 @@ const AppRoot = styled.div`
 
 const DiceButton = styled(Button)`
     transition: all .1337s ease-in-out;
-    &:hover { transform: scale(1.1); }
+    &:hover {
+        transform: scale(1.1);
+        border-radius: 1rem;
+    }
     &:active { transform: scale(1.337); }
     background-color: black;
     border-radius: 0;
@@ -36,7 +39,10 @@ const DiceButton = styled(Button)`
 const RollButton = styled(Button)`
     transition: all .1337s ease-in-out;
     &:hover { filter: brightness(1.1); }
-    &:active { transform: scale(1.1); }
+    &:active {
+        transform: scale(1.04);
+        border-radius: 1rem;
+    }
     background-color: #303030;
     border-radius: 0;
     height: 3rem;
@@ -46,7 +52,10 @@ const RollButton = styled(Button)`
 const ClearButton = styled(Button)`
     transition: all .1337s ease-in-out;
     &:hover { filter: brightness(1.1); }
-    &:active { transform: scale(1.1); }
+    &:active {
+        transform: scale(1.04);
+        border-radius: 1rem;
+    }
     background-color: #b58900;
     border-radius: 0;
     position: absolute;
@@ -194,5 +203,5 @@ const App = () => {
         </AppRoot>
     );
 }
-// abstract ClearButton onClick 
+// abstract ClearButton onClick
 export default App;
